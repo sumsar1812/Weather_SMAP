@@ -12,7 +12,7 @@ class RetrieveDataThread implements Runnable {
     private NetworkHandler networkHandler;
     private Intent intent;
     private Context context_;
-    private int SLEEP_TIME = 30*60*1000;
+    private int SLEEP_TIME_MS = 30*60*1000;
     RetrieveDataThread(Context context){
         this.intent = new Intent("RetrieveDataThread");
         networkHandler = new NetworkHandler();
@@ -26,7 +26,7 @@ class RetrieveDataThread implements Runnable {
             DbHelper.addWeather(weatherInfo);
             try {
                 Log.d("hej", "Wait for 30 min");
-                Thread.sleep(SLEEP_TIME);
+                Thread.sleep(SLEEP_TIME_MS);
             } catch (Exception e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();

@@ -3,6 +3,7 @@ package com.example.mathias.weathersmap;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Binder;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.support.v4.content.LocalBroadcastManager;
@@ -14,9 +15,16 @@ import java.net.URL;
 public class WeatherService extends Service {
     private boolean started = false;
 
+    private ServiceBinder ServiceBinder = new ServiceBinder();
+
+    public class ServiceBinder extends Binder {
+        public WeatherService getService() {
+            return WeatherService.this;
+        }
+    }
     @Override
     public IBinder onBind(Intent intent) {
-        return null;
+        return ServiceBinder;
     }
 
     @Override
@@ -27,6 +35,8 @@ public class WeatherService extends Service {
         return super.onStartCommand(intent, flags, startId);
     }
 
-
+    public void Test(){
+        Log.d("dfwef","efds");
+    }
 }
 
