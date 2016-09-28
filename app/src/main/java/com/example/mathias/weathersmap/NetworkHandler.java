@@ -14,38 +14,37 @@ public class NetworkHandler {
     private static final String CONNECT = "CONNECTIVITY";
     private static final String WEATHER_API_KEY = "a111d736151b7b355e24269ad611a112";
     private static final long CITY_ID_AARHUS = 2624652;
-    private static final String WEATHER_API_CALL = "http://api.openweathermap.org/data/2.5/weather?id=" + CITY_ID_AARHUS + "&APPID=" + WEATHER_API_KEY;
+    private static final String WEATHER_API_CALL = "http://api.openweathermap.org/data/2.5/weather?id=2624652&APPID=a111d736151b7b355e24269ad611a112";
 
-    public void GetNewestWeatherData()
+    //Heavily inspired from the weatherservicedemo
+    public String getCurrentWeatherData()
     {
+        String line = "";
         try {
             URL url = new URL(WEATHER_API_CALL);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setReadTimeout(10000 /* milliseconds */);
+            conn.setConnectTimeout(15000 /* milliseconds */);
 
+            conn.setRequestMethod("GET");
             conn.setDoInput(true);
             int response;
-            do {
-                conn.connect();
-                response = conn.getResponseCode();
-            }while(response != 200);
-
+            conn.connect();
+            response = conn.getResponseCode();
+            Log.d("responsecode", Integer.toString(response));
             InputStream input = conn.getInputStream();
 
             String s = "";
-            String line = "";
+
 
             BufferedReader rd = new BufferedReader(new InputStreamReader(input));
 
+            line = rd.readLine();
 
-            try {
-                while ((line = rd.readLine()) != null) { s += line; }
-            } catch (IOException ex) {
-                Log.e(CONNECT, "ERROR reading HTTP response", ex);
-                //ex.printStackTrace();
-            }
         }
         catch(Exception e){
-
+            e.printStackTrace();
         }
+        return line;
     }
 }
