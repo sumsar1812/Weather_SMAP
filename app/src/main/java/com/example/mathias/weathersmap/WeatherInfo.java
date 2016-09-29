@@ -11,4 +11,37 @@ public class WeatherInfo {
     public String description;
     public double temp;
     public Timestamp timestamp;
+
+    public String getCurrentDate(){
+        return timestamp.toString();
+
+    }
+
+    public void setCurrentDate(String currentDate){
+        CurrentDate = currentDate;
+    }
+
+    public int getID() {
+        return ID;
+    }
+
+    public void setID(int ID) {
+        this.ID = ID;
+    }
+
+    public String getDescription() {
+        return Description;
+    }
+
+    public void setDescription(String description) {
+        Description = description;
+    }
+
+    public int getTemperature() {
+        return Temperature;
+    }
+
+    public void setTemperature(int temperature) {
+        Temperature = temperature;
+    }
 }
