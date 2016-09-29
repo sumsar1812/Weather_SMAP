@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:weightSum="1">
+
+    <ImageView
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:id="@+id/weatherImage"
+        android:src="@mipmap/weather"
+        android:layout_margin="10dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Large Text"
+        android:id="@+id/listDescrTxt"
+        android:hint="Descr"
+        android:layout_alignTop="@+id/weatherImage"
+        android:layout_toRightOf="@+id/weatherImage"
+        android:layout_toEndOf="@+id/weatherImage"
+        android:layout_marginTop="10dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Large Text"
+        android:id="@+id/listTempTxt"
+
+        android:layout_marginLeft="40dp"
+        android:layout_marginStart="39dp"
+        android:layout_alignTop="@+id/weatherImage"
+        android:layout_toRightOf="@+id/listDescrTxt"
+        android:layout_toEndOf="@+id/listDescrTxt"
+        android:layout_marginTop="10dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Medium Text"
+        android:id="@+id/listDateTxt"
+        android:layout_alignBottom="@+id/weatherImage"
+        android:layout_alignLeft="@+id/listDescrTxt"
+        android:layout_alignStart="@+id/listDescrTxt" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Medium Text"
+        android:id="@+id/listTimeTxt"
+        android:layout_alignBottom="@+id/weatherImage"
+        android:layout_alignLeft="@+id/listTempTxt"
+        android:layout_alignStart="@+id/listTempTxt" />
+
+
+</RelativeLayout>
