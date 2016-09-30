@@ -38,11 +38,6 @@ public class MainActivity extends AppCompatActivity {
 
         //adding sample data to test list
 
-        weatherModelList.add(new WeatherInfo(1,"Cloudy", 17,"25-09-2016"));
-        weatherModelList.add(new WeatherInfo(2,"Cloudy", 17,"25-09-2016"));
-        weatherModelList.add(new WeatherInfo(3,"Cloudy", 17,"25-09-2016"));
-        weatherModelList.add(new WeatherInfo(4,"Cloudy", 17,"25-09-2016"));
-        weatherModelList.add(new WeatherInfo(5,"Cloudy", 17,"25-09-2016"));
 
         adapter = new CustomAdapter(getApplicationContext(), weatherModelList);
         custom_listView.setAdapter(adapter);

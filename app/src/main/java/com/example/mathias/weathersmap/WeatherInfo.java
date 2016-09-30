@@ -7,41 +7,38 @@ import java.util.Date;
  * Created by Rasmus on 28-09-2016.
  */
 public class WeatherInfo {
-    public int id;
-    public String description;
-    public double temp;
-    public Timestamp timestamp;
+    private int id_;
+    private String description_;
+    private double temp_;
+    private Timestamp timestamp_;
 
-    public String getCurrentDate(){
-        return timestamp.toString();
+    public Timestamp getDate() { return timestamp_; }
 
-    }
-
-    public void setCurrentDate(String currentDate){
-        CurrentDate = currentDate;
+    public void setDate(Timestamp date){
+        timestamp_ = date;
     }
 
     public int getID() {
-        return ID;
+        return id_;
     }
 
-    public void setID(int ID) {
-        this.ID = ID;
+    public void setID(int id) {
+        this.id_ = id;
     }
 
     public String getDescription() {
-        return Description;
+        return description_;
     }
 
     public void setDescription(String description) {
-        Description = description;
+        description_ = description;
     }
 
-    public int getTemperature() {
-        return Temperature;
+    public double getTemperature() {
+        return temp_;
     }
 
-    public void setTemperature(int temperature) {
-        Temperature = temperature;
+    public void setTemperature(double temperature) {
+        temp_ = temperature;
     }
 }

@@ -1,8 +1,10 @@
 package com.example.mathias.weathersmap;
 
 import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.IBinder;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -27,7 +29,6 @@ public class WeatherView extends AppCompatActivity {
         //DescrTxt = (TextView)findViewById(R.id.descrTxt);
         // UpdateTxt = (TextView)findViewById(R.id.updateTxt);
 
-
         custom_listView = (ListView)findViewById(R.id.custom_listView);
 
         //Get
@@ -35,11 +36,6 @@ public class WeatherView extends AppCompatActivity {
 
         //adding sample data to test list
 
-        weatherModelList.add(new WeatherInfo(1,"Cloudy", 17,"25-09-2016"));
-        weatherModelList.add(new WeatherInfo(2,"Cloudy", 17,"25-09-2016"));
-        weatherModelList.add(new WeatherInfo(3,"Cloudy", 17,"25-09-2016"));
-        weatherModelList.add(new WeatherInfo(4,"Cloudy", 17,"25-09-2016"));
-        weatherModelList.add(new WeatherInfo(5,"Cloudy", 17,"25-09-2016"));
 
         adapter = new CustomAdapter(getApplicationContext(), weatherModelList);
         custom_listView.setAdapter(adapter);
@@ -47,18 +43,33 @@ public class WeatherView extends AppCompatActivity {
         Log.d("Start", "StartSercice");
         Intent intent = new Intent(WeatherView.this, WeatherService.class);
         startService(intent);
+        //TODO Var ikke sikker, men tænker at connAllWeatherInfo skal bindes her? for at hente alt info ud når appen startes vel?
     }
 
     public void click(View view){
         Intent intent = new Intent(WeatherView.this, WeatherService.class);
-        bindService(intent, conn, BIND_AUTO_CREATE);
-    };
+        bindService(intent, connCurrentWeatherInfo, BIND_AUTO_CREATE);
+};
 
-    ServiceConnection conn = new ServiceConnection() {
+    ServiceConnection connAllWeatherInfo = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
             WeatherService.ServiceBinder service = (WeatherService.ServiceBinder) iBinder;
-            service.getService().Test();
+            List<WeatherInfo> weahterList =  service.getService().getPastWeather();
+            //TODO Needs UI update
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName componentName) {
+
+        }
+    };
+    ServiceConnection connCurrentWeatherInfo = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
+            WeatherService.ServiceBinder service = (WeatherService.ServiceBinder) iBinder;
+            WeatherInfo weather = service.getService().getCurrentWeather();
+            //TODO Needs ui update
         }
 
         @Override

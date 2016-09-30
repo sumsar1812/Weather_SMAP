@@ -1,4 +1,4 @@
-package com.example.solveigdoan.aarhusweather;
+package com.example.mathias.weathersmap;
 
 import android.widget.ImageView;
 
@@ -8,7 +8,7 @@ import java.sql.Timestamp;
  * Created by solveigdoan on 27/09/16.
  */
 public class WeatherModel {
-
+//android:src="@mipmap/weather"
     private int ID;
     private String Description;
     private int Temperature;

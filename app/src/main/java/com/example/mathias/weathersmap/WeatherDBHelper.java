@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,7 +28,7 @@ public class WeatherDBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String executeStatement = "CREATE TABLE " + TABLE + "(" + PRIM_KEY + "INTEGER PRIMARY KEY," + KEY_INFO_KEY + " TEXT," + KEY_TEMP + " REAL," + KEY_TIMESTAMP + " DATETIME DEFAULT CURRENT_TIMESTAMP" + ")";
+        String executeStatement = "CREATE TABLE " + TABLE + "(" + PRIM_KEY + " INTEGER PRIMARY KEY AUTOINCREMENT," + KEY_INFO_KEY + " TEXT," + KEY_TEMP + " REAL," + KEY_TIMESTAMP + " DATETIME DEFAULT CURRENT_TIMESTAMP" + ")";
         db.execSQL(executeStatement);
     }
 
@@ -41,9 +42,21 @@ public class WeatherDBHelper extends SQLiteOpenHelper {
     {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(PRIM_KEY,i.id);
-        values.put(KEY_INFO_KEY,i.description);
-        values.put(KEY_TEMP,i.temp);
+        values.put(PRIM_KEY,i.getID());
+        values.put(KEY_INFO_KEY,i.getDescription());
+        values.put(KEY_TEMP,i.getTemperature());
+    }
+    public WeatherInfo getCurrentWeather()
+    {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String selectQuery = "SELECT * FROM " + TABLE + " WHERE id = (SELECT MAX(id)  FROM " + TABLE + " )";
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        WeatherInfo weather = new WeatherInfo();
+        weather.setID(cursor.getInt(0));
+        weather.setDescription(cursor.getString(1));
+        weather.setTemperature(cursor.getDouble(2));
+        weather.setDate(Timestamp.valueOf(cursor.getString(3)));
+        return weather;
     }
     public List<WeatherInfo> getAllWeatherData()
     {
@@ -54,9 +67,10 @@ public class WeatherDBHelper extends SQLiteOpenHelper {
         if (cursor.moveToFirst()) {
             do {
                 WeatherInfo weather = new WeatherInfo();
-                weather.id = Integer.parseInt(cursor.getString(0));
-                weather.description = cursor.getString(1);
-                weather.temp = Double.parseDouble(cursor.getString(2));
+                weather.setID(cursor.getInt(0));
+                weather.setDescription(cursor.getString(1));
+                weather.setTemperature(cursor.getDouble(2));
+                weather.setDate(Timestamp.valueOf(cursor.getString(3)));
                 weahterInfoList.add(weather);
             } while (cursor.moveToNext());
         }

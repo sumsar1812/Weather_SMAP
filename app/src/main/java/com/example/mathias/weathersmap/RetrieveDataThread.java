@@ -12,7 +12,7 @@ class RetrieveDataThread implements Runnable {
     private NetworkHandler networkHandler;
     private Intent intent;
     private Context context_;
-    private int SLEEP_TIME_MS = 30*60*1000;
+    private int SLEEP_TIME_MS = 1*10*1000;
     RetrieveDataThread(Context context){
         this.intent = new Intent("RetrieveDataThread");
         networkHandler = new NetworkHandler();
@@ -39,9 +39,9 @@ class RetrieveDataThread implements Runnable {
         try {
             JSONObject jsonObject = new JSONObject(jsonString);
             String description = jsonObject.getJSONArray("weather").getJSONObject(0).getString("description");;
-            weatherInfo.description = description;
+            weatherInfo.setDescription(description);
             double temperature = jsonObject.getJSONObject("main").getInt("temp");
-            weatherInfo.temp = temperature;
+            weatherInfo.setTemperature(temperature);
         }catch(Exception e){
 
         }

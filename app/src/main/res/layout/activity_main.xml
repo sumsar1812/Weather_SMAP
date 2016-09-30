@@ -26,8 +26,7 @@
         android:layout_height="100dp"
         android:background="#fff"
         android:id="@+id/weatherIcon"
-        android:layout_below="@id/currentWeather"
-        android:src="@mipmap/weather" />
+        android:layout_below="@id/currentWeather" />
 
     <TextView
         android:id="@+id/tempTxt"

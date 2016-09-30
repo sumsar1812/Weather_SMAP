@@ -68,7 +68,7 @@ public class CustomAdapter extends BaseAdapter {
 
             Description.setText(mWeatherModelList.get(position).getDescription());
             Temperature.setText(String.valueOf(mWeatherModelList.get(position).getTemperature()) + "°C");
-            CurrentDate.setText(String.valueOf(mWeatherModelList.get(position).getCurrentDate()));
+            CurrentDate.setText(String.valueOf(mWeatherModelList.get(position).getDate()));
             //timestamp_.setText(String.valueOf(mWeatherModelList.get(position).getTimestamp_()));
             //Date.setText(String.valueOf(mWeatherModelList.get(position).getDate()));
             //Time.setText(String.valueOf(mWeatherModelList.get(position).getTime()));
