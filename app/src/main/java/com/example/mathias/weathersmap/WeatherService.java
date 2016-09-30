@@ -12,6 +12,7 @@ import android.util.Log;
 
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 
 public class WeatherService extends Service {
@@ -26,25 +27,26 @@ public class WeatherService extends Service {
     }
     @Override
     public IBinder onBind(Intent intent) {
+        Log.d("Action", "Binding to Weather service");
         return ServiceBinder;
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        Log.d("Start", "StartCommand");
+        Log.d("Action", "onStartCommand - weatherService");
         dbHelper = new WeatherDBHelper(this);
         RetrieveDataThread bk = new RetrieveDataThread(getApplicationContext());
         new Thread(bk).start();
         return super.onStartCommand(intent, flags, startId);
     }
     public WeatherInfo getCurrentWeather(){
+        Log.d("Action","getCurrentWeather - WeatherService");
         return dbHelper.getCurrentWeather();
     }
     public List<WeatherInfo> getPastWeather(){
+        Log.d("Action","getPastWeather - WeatherService");
         return dbHelper.getAllWeatherData();
     }
-    public void Test(){
-        Log.d("dfwef","efds");
-    }
+}
 }
 
