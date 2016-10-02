@@ -45,18 +45,24 @@ public class WeatherDBHelper extends SQLiteOpenHelper {
         values.put(PRIM_KEY,i.getID());
         values.put(KEY_INFO_KEY,i.getDescription());
         values.put(KEY_TEMP,i.getTemperature());
+        db.insert(TABLE,null,values);
     }
     public WeatherInfo getCurrentWeather()
     {
         SQLiteDatabase db = this.getReadableDatabase();
-        String selectQuery = "SELECT * FROM " + TABLE + " WHERE id = (SELECT MAX(id)  FROM " + TABLE + " )";
-        Cursor cursor = db.rawQuery(selectQuery, null);
+        String selectQuery = "SELECT * FROM " + TABLE + " WHERE id = (SELECT MAX(id)  FROM " + TABLE + ")";
+        //String[] queryOn = {PRIM_KEY,KEY_INFO_KEY,KEY_TEMP,KEY_TIMESTAMP};
+        //Cursor cursor = db.query(TABLE,queryOn,PRIM_KEY + "=",new String[]{"MAX(id)"},null,null,null);
+        Cursor cursor = db.rawQuery(selectQuery,null);
         WeatherInfo weather = new WeatherInfo();
-        weather.setID(cursor.getInt(0));
-        weather.setDescription(cursor.getString(1));
-        weather.setTemperature(cursor.getDouble(2));
-        weather.setDate(Timestamp.valueOf(cursor.getString(3)));
-        return weather;
+        if(cursor.getCount() >0 &&cursor.moveToFirst()) {
+            weather.setID(cursor.getInt(0));
+            weather.setDescription(cursor.getString(1));
+            weather.setTemperature(cursor.getDouble(2));
+            weather.setDate(Timestamp.valueOf(cursor.getString(3)));
+            return weather;
+        }
+        return null;
     }
     public List<WeatherInfo> getAllWeatherData()
     {
@@ -64,7 +70,7 @@ public class WeatherDBHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
         String selectQuery = "SELECT * FROM " + TABLE;
         Cursor cursor = db.rawQuery(selectQuery, null);
-        if (cursor.moveToFirst()) {
+        if (cursor.getCount() >0 && cursor.moveToFirst()) {
             do {
                 WeatherInfo weather = new WeatherInfo();
                 weather.setID(cursor.getInt(0));

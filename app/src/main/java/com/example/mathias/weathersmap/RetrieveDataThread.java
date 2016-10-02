@@ -25,13 +25,12 @@ class RetrieveDataThread implements Runnable {
             WeatherDBHelper DbHelper = new WeatherDBHelper(context_);
             DbHelper.addWeather(weatherInfo);
             try {
-                Log.d("hej", "Wait for 30 min");
+                Log.d("", "Wait for 30 min");
                 Intent broadCastIntent = new Intent();
                 broadCastIntent.setAction("com.example.broadcast");
                 context_.sendBroadcast(broadCastIntent);
                 Thread.sleep(SLEEP_TIME_MS);
             } catch (Exception e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             }
         }

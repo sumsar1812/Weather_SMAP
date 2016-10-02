@@ -81,6 +81,9 @@ public class WeatherView extends AppCompatActivity {
             //update current weather here
             WeatherService.ServiceBinder service = (WeatherService.ServiceBinder) iBinder;
             WeatherInfo weather = service.getService().getCurrentWeather();
+            if (weather==null)
+                return;
+
             Log.d("dsf",weather.getDescription());
         }
 

@@ -48,5 +48,4 @@ public class WeatherService extends Service {
         return dbHelper.getAllWeatherData();
     }
 }
-}
 
