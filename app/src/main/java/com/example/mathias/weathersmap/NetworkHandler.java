@@ -14,7 +14,7 @@ public class NetworkHandler {
     private static final String CONNECT = "CONNECTIVITY";
     private static final String WEATHER_API_KEY = "a111d736151b7b355e24269ad611a112";
     private static final long CITY_ID_AARHUS = 2624652;
-    private static final String WEATHER_API_CALL = "http://api.openweathermap.org/data/2.5/weather?id=2624652&APPID=a111d736151b7b355e24269ad611a112";
+    private static final String WEATHER_API_CALL = "http://api.openweathermap.org/data/2.5/weather?id=2624652&APPID=a111d736151b7b355e24269ad611a112&units=metric";
 
     //Heavily inspired from the weatherservicedemo
     public String getCurrentWeatherData()

@@ -1,4 +1,4 @@
 <resources>
-    <string name="app_name">WeatherSmap</string>
-    <string name="Past_24_hours">Past_24_hours</string>
+    <string name="app_name">"Aarhus Weather "</string>
+    <string name="Past_24_hours">Past 24 hours</string>
 </resources>

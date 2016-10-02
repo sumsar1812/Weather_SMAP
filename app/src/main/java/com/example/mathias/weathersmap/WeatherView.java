@@ -13,7 +13,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -24,6 +26,7 @@ public class WeatherView extends AppCompatActivity {
     private CustomAdapter adapter;
     private List<WeatherInfo> weatherModelList;
     private Intent serviceIntent;
+    private boolean bound = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +39,13 @@ public class WeatherView extends AppCompatActivity {
         serviceIntent = new Intent(WeatherView.this, WeatherService.class);
         startService(serviceIntent);
         updateView();
+        Button refreshBtn = (Button) findViewById(R.id.button);
+        refreshBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                updateView();
+            }
+        });
 
     }
 
@@ -67,6 +77,7 @@ public class WeatherView extends AppCompatActivity {
             custom_listView = (ListView)findViewById(R.id.custom_listView);
             adapter = new CustomAdapter(getApplicationContext(), weatherModelList);
             custom_listView.setAdapter(adapter);
+
         }
 
         @Override
@@ -84,7 +95,13 @@ public class WeatherView extends AppCompatActivity {
             if (weather==null)
                 return;
 
-            Log.d("dsf",weather.getDescription());
+            TextView currentDescView = (TextView) findViewById(R.id.descrTxt);
+            TextView currentTempView = (TextView) findViewById(R.id.tempTxt);
+            TextView lastUpdateView = (TextView) findViewById(R.id.lastUpdated);
+            currentDescView.setText(weather.getDescription());
+            currentTempView.setText(String.valueOf(weather.getTemperature()));
+            lastUpdateView.setText(weather.getDate().toString());
+
         }
 
         @Override
@@ -97,8 +114,17 @@ public class WeatherView extends AppCompatActivity {
     private void updateView(){
         Log.d("Action", "Update view");
         //Setting current weather
-        bindService(serviceIntent, connCurrentWeatherInfo, BIND_AUTO_CREATE);
+        if(bound)
+        {
+            getApplicationContext().unbindService(connCurrentWeatherInfo);
+            getApplicationContext().unbindService(connAllWeatherInfo);
+            bound=false;
+        }
+
+        getApplicationContext().bindService(serviceIntent, connCurrentWeatherInfo, BIND_AUTO_CREATE);
         // Past weather
-        bindService(serviceIntent, connAllWeatherInfo, BIND_AUTO_CREATE);
+        getApplicationContext().bindService(serviceIntent, connAllWeatherInfo, BIND_AUTO_CREATE);
+        bound = true;
+
     }
 }

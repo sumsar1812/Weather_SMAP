@@ -23,7 +23,7 @@ public class WeatherDBHelper extends SQLiteOpenHelper {
     private static final String KEY_TIMESTAMP = "timestamp";
     public WeatherDBHelper(Context context)
     {
-        super(context,DATABASE_NAME,null,1);
+        super(context,DATABASE_NAME,null,2);
     }
 
     @Override
@@ -42,7 +42,6 @@ public class WeatherDBHelper extends SQLiteOpenHelper {
     {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(PRIM_KEY,i.getID());
         values.put(KEY_INFO_KEY,i.getDescription());
         values.put(KEY_TEMP,i.getTemperature());
         db.insert(TABLE,null,values);
@@ -68,7 +67,7 @@ public class WeatherDBHelper extends SQLiteOpenHelper {
     {
         List<WeatherInfo> weahterInfoList = new ArrayList<WeatherInfo>();
         SQLiteDatabase db = this.getReadableDatabase();
-        String selectQuery = "SELECT * FROM " + TABLE;
+        String selectQuery = "SELECT * FROM " + TABLE + " WHERE timestamp >= datetime('now', '-24 hours')";
         Cursor cursor = db.rawQuery(selectQuery, null);
         if (cursor.getCount() >0 && cursor.moveToFirst()) {
             do {
